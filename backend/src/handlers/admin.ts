@@ -1,0 +1,138 @@
+import { NextFunction, Request, Response } from "express";
+import { z } from "zod";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { signInUserSchema, signUpUserSchema } from "../utils/zodObject";
+import { adminModel, courseModel, userModel } from "../db/schema";
+import { AppError } from "../types/AppError";
+import config from "../config/config";
+
+export async function signup(req: Request, res: Response, next: NextFunction) {
+  const { username, password, name } = req.body;
+
+  const validUser = signUpUserSchema.safeParse({
+    username,
+    password,
+    name,
+  });
+  type User = z.infer<typeof signUpUserSchema>;
+  if (validUser.success) {
+    const safeUser: User = { username, password, name };
+    try {
+      const hashed = await bcrypt.hash(safeUser.password, 10);
+
+      const createdAdmin = await adminModel.create({
+        username: safeUser.username,
+        password: hashed,
+        name: safeUser.name,
+        role: "admin",
+      });
+      if (createdAdmin) {
+        res.status(200).json({ success: true, createdAdmin });
+      } else {
+        res
+          .status(411)
+          .json({ success: false, message: "unable to create user" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    throw validUser.error;
+  }
+}
+
+export async function signin(req: Request, res: Response, next: NextFunction) {
+  const { username, password } = req.body;
+
+  const validUser = signInUserSchema.safeParse({
+    username,
+    password,
+  });
+  type User = z.infer<typeof signInUserSchema>;
+  if (validUser.success) {
+    const safeUser: User = { username, password };
+    const userMatch = await userModel.findOne({ username: safeUser.username });
+    if (userMatch) {
+      const passwordMatch = await bcrypt.compare(
+        safeUser.password,
+        userMatch.password
+      );
+      if (passwordMatch) {
+        const _id = userMatch._id;
+        const token = jwt.sign({ _id }, config.jwt_secret);
+        if (token) {
+          res.status(200).json({ success: true, token });
+        } else {
+          res
+            .status(400)
+            .json({ success: false, message: "unable to generate token" });
+        }
+      } else {
+        throw new AppError("wrong password entered", 403);
+      }
+    } else {
+      throw new AppError("user not found, wrong email", 403);
+    }
+  } else {
+    throw validUser.error;
+  }
+}
+
+export async function createCourse(
+  req: Request<{}, {}, adminBody, {}>,
+  res: Response,
+  next: NextFunction
+) {
+  const { title, body, image, seats } = req.body;
+  const userId = req.userId;
+
+  if (userId) {
+    try {
+      const courseCreated = await courseModel.create({
+        title,
+        body,
+        image,
+        seats,
+        adminId: userId,
+      });
+      if (courseCreated) {
+        res.status(200).json({ success: true, courseCreated });
+      } else {
+        res
+          .status(400)
+          .json({ success: false, message: "unable to create course" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    throw new AppError("not authenticated", 403);
+  }
+}
+
+export async function deleteCourse(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const adminId = req.userId;
+  const courseId = req.params.courseId;
+
+  const admin = await adminModel.findOne({ _id: adminId });
+  if (admin) {
+    const deletedcourse = await courseModel.deleteOne({
+      _id: courseId,
+      adminId: admin._id,
+    });
+    if (deletedcourse) {
+      res.status(200).json({ success: true, deleteCourse });
+    } else {
+      res
+        .status(400)
+        .json({ success: false, message: "unable to delete course" });
+    }
+  } else {
+    throw new AppError("admin does not exsist", 403);
+  }
+}

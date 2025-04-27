@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { courseModel, purchaseModel, userModel } from "../db/schema";
 import { AppError } from "../types/AppError";
 import config from "../config/config";
+import { signInUserSchema, signUpUserSchema } from "../utils/zodObject";
 
 export async function signup(
   req: Request<{}, {}, userBody, {}>,
@@ -13,31 +14,12 @@ export async function signup(
 ) {
   const { username, password, name } = req.body;
 
-  const userSchema = z.object({
-    username: z
-      .string()
-      .min(4)
-      .max(25)
-      .email({ message: "Invalid email address" }),
-    password: z
-      .string()
-      .min(6, { message: "minimum of 6 characters needed!" })
-      .max(20, { message: "should be atmost 20 characters!" })
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,20}$/,
-        {
-          message:
-            "Password must include uppercase, lowercase, number, and special character",
-        }
-      ),
-    name: z.string({ message: "should be alphabets" }).optional(),
-  });
-  const validUser = userSchema.safeParse({
+  const validUser = signUpUserSchema.safeParse({
     username,
     password,
     name,
   });
-  type User = z.infer<typeof userSchema>;
+  type User = z.infer<typeof signUpUserSchema>;
 
   if (validUser.success) {
     try {
@@ -76,32 +58,11 @@ export async function signin(
 ) {
   const { username, password } = req.body;
 
-  const userSchema = z
-    .object({
-      username: z
-        .string()
-        .min(4)
-        .max(25)
-        .email({ message: "Invalid email address" }),
-      password: z
-        .string()
-        .min(6, { message: "minimum of 6 characters needed!" })
-        .max(20, { message: "should be atmost 20 characters!" })
-        .regex(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,20}$/,
-          {
-            message:
-              "Password must include uppercase, lowercase, number, and special character",
-          }
-        ),
-    })
-    .strict();
-
-  const validUser = userSchema.safeParse({
+  const validUser = signInUserSchema.safeParse({
     username,
     password,
   });
-  type User = z.infer<typeof userSchema>;
+  type User = z.infer<typeof signInUserSchema>;
   if (validUser.success) {
     const safeUser: User = { username, password };
     try {
@@ -199,19 +160,34 @@ export async function purchaseCourse(
     const course = await courseModel.findOne({ _id: courseId });
 
     if (user && course) {
-      const updatedPurchase = await purchaseModel.findOneAndUpdate(
-        { userId: user._id },
-        { $addToSet: { courseId: course._id } },
-        { upsert: true, new: true }
-      );
-      res.status(200).json({
-        success: true,
-        purchase: course,
-        allPurchases: updatedPurchase,
-      });
+      if (course.seats <= 0) {
+        res.status(409).json({
+          success: false,
+          message: "no more seats available in this course",
+        });
+      } else {
+        const updatedPurchase = await purchaseModel.findOneAndUpdate(
+          { userId: user._id },
+          { $addToSet: { courseId: course._id } },
+          { upsert: true, new: true }
+        );
+        if (updatedPurchase) {
+          const seatsUpdated = await courseModel.findOneAndUpdate(
+            { _id: course._id },
+            { $inc: { seats: -1 } },
+            { new: true }
+          );
+          res.status(200).json({
+            success: true,
+            purchase: course,
+            allPurchases: updatedPurchase,
+            remainingSeats: seatsUpdated?.seats,
+          });
+        }
+      }
     } else {
       res
-        .status(403)
+        .status(404)
         .json({ success: false, message: "user or course not found" });
     }
   } catch (error) {
