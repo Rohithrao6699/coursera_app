@@ -1,5 +1,6 @@
 export type IconType = {
   size: "sm" | "md" | "lg";
+  onclick?: () => void;
 };
 export const sizeStyles = {
   sm: "size-4 cursor-pointer",

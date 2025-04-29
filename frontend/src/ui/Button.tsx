@@ -16,9 +16,9 @@ const variantStyles = {
   buy: "bg-yellow-100",
 };
 const sizeStyles = {
-  sm: "py-1 px-2",
-  md: "py-1 px-3",
-  lg: "py-2 px-4",
+  sm: "py-1 px-2 w-20",
+  md: "py-1 px-3 w-30",
+  lg: "py-2 px-4 w-40",
 };
 
 const defaultStyles: string = "rounded-md text-center cursor-pointer";

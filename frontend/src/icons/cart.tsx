@@ -1,12 +1,6 @@
-type IconType = {
-  size: "sm" | "md" | "lg";
-};
-const sizeStyles = {
-  sm: "size-4 cursor-pointer",
-  md: "size-5 cursor-pointer",
-  lg: "size-6 cursor pointer",
-};
-export function Cart(props: IconType) {
+import { IconType, sizeStyles } from "./iconsTypes";
+
+export function CartIcon(props: IconType) {
   return (
     <>
       <svg
