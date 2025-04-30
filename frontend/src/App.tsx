@@ -19,7 +19,7 @@ function App() {
           <Route path="/user/dashboard" element={<Layout />}>
             <Route index element={<Content />} />
             <Route path="mycourses" element={<MyCourse />} />
-            <Route path="course" element={<CourseBlogPage />} />
+            <Route path="course/:courseId" element={<CourseBlogPage />} />
           </Route>
           <Route path="/admin/Dashboard" element={<AdminLayout />}>
             <Route index element={<Content />} />

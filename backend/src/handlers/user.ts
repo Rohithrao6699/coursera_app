@@ -107,7 +107,7 @@ export async function getCourses(
     try {
       const courses = await courseModel.find({});
       if (courses) {
-        res.status(200).json({ success: true, courses });
+        res.status(200).json({ success: true, content: courses });
       }
     } catch (error) {
       next(error);
@@ -134,7 +134,7 @@ export async function getMyCourses(
               $in: purchased.courseId,
             },
           });
-          res.status(200).json({ success: true, purchasedCourses });
+          res.status(200).json({ success: true, content: purchasedCourses });
         } else {
           res.status(400).json({
             success: false,
@@ -181,7 +181,7 @@ export async function purchaseCourse(
           );
           res.status(200).json({
             success: true,
-            purchase: course,
+            content: course,
             allPurchases: updatedPurchase,
             remainingSeats: seatsUpdated?.seats,
           });

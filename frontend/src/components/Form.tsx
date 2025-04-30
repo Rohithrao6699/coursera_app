@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Button } from "../ui/Button";
-import { userSignup } from "../api/userapi";
+import { userSignin, userSignup } from "../api/userapi";
 import { useNavigate } from "react-router-dom";
 
 type FormProps = {
@@ -45,7 +45,7 @@ export function Form(props: FormProps) {
     const password = passwordRef.current?.value;
     if (username && password) {
       let body = { username, password };
-      const data = await userSignup(body);
+      const data = await userSignin(body);
       if (data?.success === true) {
         //this data is returned by useFetch which can be null or {} so that is why .success was not working, so we
         //need to specufy to ts that what kind of data will be retunred fromm backend, I did specify now and

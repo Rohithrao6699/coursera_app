@@ -1,11 +1,12 @@
+import { useRecoilValue } from "recoil";
 import { CourseBlogContent } from "../components/CourseBlogContent";
-// import { Footer } from "../components/Footer";
-// import { Navbar } from "../components/Navbar";
+import { AllCoursesAtom } from "../store/AllCoursesAtom";
+import { useParams } from "react-router-dom";
 
 export function CourseBlogPage() {
-  return (
-    <>
-      <CourseBlogContent />
-    </>
-  );
+  const { courseId } = useParams();
+  const allCourses = useRecoilValue(AllCoursesAtom);
+  const course = allCourses.find((course) => course._id === courseId);
+
+  return <>{course && <CourseBlogContent filteredcourse={course} />}</>;
 }

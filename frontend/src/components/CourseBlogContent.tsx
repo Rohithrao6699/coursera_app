@@ -1,19 +1,18 @@
+import { CourseBlogContentType } from "../types/UserTypes";
 import { Button } from "../ui/Button";
 
-export function CourseBlogContent() {
+export function CourseBlogContent({ filteredcourse }: CourseBlogContentType) {
   return (
     <>
       <div className="flex flex-col gap-2 p-4">
-        <h2 className="font-semibold text-xl">
-          Pontificia Universidad Católica de Chile
-        </h2>
-        <img alt="image" className="min-h-40" />
-        <h4 className="font-semibold text-lg">
-          English for commoners to become pro at this and help othera at
-          learning englid=sh
-        </h4>
-        <p className="font-thin text-md">the whole body of course</p>
-        <p>skills you'll gain</p>
+        <h2 className="font-semibold text-xl">{filteredcourse.title}</h2>
+        <img alt="image" src={filteredcourse.image} className="min-h-40" />
+        <h4 className="font-semibold text-lg">{filteredcourse.title}</h4>
+        <p className="font-thin text-md">{filteredcourse.body}</p>
+        <p>
+          <span>skills you'll gain:</span>
+          {filteredcourse.skills}
+        </p>
         <div className="flex gap-2">
           <Button variant="primary" size="lg" text="buy now" />
           <Button variant="primary" size="lg" text="add to cart" />

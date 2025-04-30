@@ -12,6 +12,7 @@ dotenv.config();
 
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
 import userRouter from "./routes/user";
 import adminRouter from "./routes/admin";
 import { errorMiddleWare } from "./middleware/errorMiddleWare";
@@ -20,6 +21,7 @@ import config from "./config/config";
 const app = express();
 main();
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
