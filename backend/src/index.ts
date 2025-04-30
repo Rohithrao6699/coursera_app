@@ -27,6 +27,7 @@ app.use("/api/admin", adminRouter);
 async function main() {
   app.listen(config.port, () => {
     console.log("listening on port 3000");
+    console.log(config.mongo_uri);
   });
   await mongoose.connect(config.mongo_uri);
 }

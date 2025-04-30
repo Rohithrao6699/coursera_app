@@ -8,6 +8,7 @@ import { Footer } from "./components/Footer";
 import { MyCourse } from "./pages/MyCourse";
 import { Content } from "./components/Content";
 
+///api/user
 function App() {
   return (
     <>

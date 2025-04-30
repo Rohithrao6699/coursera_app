@@ -6,6 +6,7 @@ import { courseModel, purchaseModel, userModel } from "../db/schema";
 import { AppError } from "../types/AppError";
 import config from "../config/config";
 import { signInUserSchema, signUpUserSchema } from "../utils/zodObject";
+import { userBody } from "../types/user";
 
 export async function signup(
   req: Request<{}, {}, userBody, {}>,
@@ -84,8 +85,9 @@ export async function signin(
         } else {
           throw new AppError("wrong password entered", 403);
         }
+      } else {
+        throw new AppError("user not found", 403);
       }
-      throw new AppError("user not found", 403);
     } catch (error) {
       next(error);
     }

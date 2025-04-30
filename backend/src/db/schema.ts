@@ -1,6 +1,7 @@
 import mongoose, { model, Schema } from "mongoose";
 
 const userType = ["user", "admin"];
+const courseLevelType = ["easy", "intermediate", "hard"];
 
 const UserSchema = new Schema({
   name: String,
@@ -21,6 +22,9 @@ const CourseSchema = new Schema({
   body: { type: String, required: true },
   image: { type: String },
   seats: { type: Number, required: true },
+  tagLine: { type: String, required: true },
+  level: { type: String, enum: courseLevelType, required: true },
+  skills: { type: String, required: true },
   adminId: { type: mongoose.Types.ObjectId, ref: "admins" },
 });
 

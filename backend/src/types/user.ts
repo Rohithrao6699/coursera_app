@@ -1,4 +1,4 @@
-interface userBody {
+export interface userBody {
   username: string;
   password: string;
   name?: string;

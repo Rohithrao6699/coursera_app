@@ -6,6 +6,7 @@ import { signInUserSchema, signUpUserSchema } from "../utils/zodObject";
 import { adminModel, courseModel, userModel } from "../db/schema";
 import { AppError } from "../types/AppError";
 import config from "../config/config";
+import { adminBody } from "../types/admin";
 
 export async function signup(req: Request, res: Response, next: NextFunction) {
   const { username, password, name } = req.body;
@@ -84,7 +85,7 @@ export async function createCourse(
   res: Response,
   next: NextFunction
 ) {
-  const { title, body, image, seats } = req.body;
+  const { title, body, image, seats, tagLine, level, skills } = req.body;
   const userId = req.userId;
 
   if (userId) {
@@ -94,6 +95,9 @@ export async function createCourse(
         body,
         image,
         seats,
+        tagLine,
+        level,
+        skills,
         adminId: userId,
       });
       if (courseCreated) {
