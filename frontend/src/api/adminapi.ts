@@ -11,6 +11,10 @@ interface AdminSingupInterface {
 
 interface adminCreateCourseInterface {
   title: string;
+  tagline: string;
+  skills: string;
+  level: string;
+  price: string;
   body: string;
   image: string;
   seats: number;
@@ -26,7 +30,7 @@ export async function adminSignup(body: AdminSingupInterface) {
   // });
   // return data;
   const res = await axios.post(`${Base_Url}/signup`, body);
-  const data = res.data;
+  const data: ReceivedDataType = res.data;
   return data;
 }
 
@@ -40,7 +44,7 @@ export async function adminSignin(body: AdminSingupInterface) {
   // });
   // return data;
   const res = await axios.post(`${Base_Url}/signin`, body);
-  const data = res.data;
+  const data: ReceivedDataType = res.data;
   return data;
 }
 
@@ -48,14 +52,6 @@ export async function adminCreateCourse(
   body: adminCreateCourseInterface,
   token: string
 ) {
-  // const data = useFetch({
-  //   method: "POST",
-  //   url: `${Base_Url}/createCourse`,
-  //   data: body,
-  //   headers: { Authorization: token },
-  //   params: {},
-  // });
-  // return data;
   const res = await axios.post(`${Base_Url}/createCourse`, body, {
     headers: { Authorization: token },
   });

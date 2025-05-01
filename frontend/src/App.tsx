@@ -22,7 +22,7 @@ function App() {
             <Route path="mycourses" element={<MyCourse />} />
             <Route path="course/:courseId" element={<CourseBlogPage />} />
           </Route>
-          <Route path="/admin/Dashboard" element={<AdminLayout />}>
+          <Route path="/admin/dashboard" element={<AdminLayout />}>
             <Route index element={<AdminContent />} />
             <Route path="createcourse" element={<CreateCourse />} />
           </Route>

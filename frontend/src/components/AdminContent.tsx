@@ -4,6 +4,7 @@ import { CourseCard } from "../ui/CourseCard";
 import { AdminCoursesAtom } from "../store/adminStore/AllCoursesAtom";
 import { useEffect } from "react";
 import { CreateUserAtom } from "../store/CreateUserAtom";
+import { useNavigate } from "react-router-dom";
 
 export function AdminContent() {
   const [adminCourses, setAdminCourses] = useRecoilState(AdminCoursesAtom);
@@ -38,8 +39,10 @@ export function AdminContent() {
 }
 
 function EmptyCourseCard() {
+  const navigate = useNavigate();
   function handleCreateCourseClick() {
     console.log("Create Course");
+    navigate("createcourse");
   }
   return (
     <>

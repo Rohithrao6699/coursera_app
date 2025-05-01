@@ -1,11 +1,14 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userGetmyContent } from "../../api/userapi";
 import { CourseCard } from "../../ui/CourseCard";
 import { UserCoursesAtom } from "../../store/userStore/UserCourseAtom";
 import { useEffect } from "react";
+import { CreateUserAtom } from "../../store/CreateUserAtom";
 
 export function MyCourse() {
   const [myCourses, setMyCourses] = useRecoilState(UserCoursesAtom);
+  const userType = useRecoilValue(CreateUserAtom);
+
   function handleMyCourseClick() {
     console.log("my course clicked");
   }
@@ -32,7 +35,11 @@ export function MyCourse() {
       <div>
         hi, fetch users purchased courses and display them as courseCards
         {myCourses.map((course) => (
-          <CourseCard handleClick={handleMyCourseClick} _id={course._id} />
+          <CourseCard
+            handleClick={handleMyCourseClick}
+            _id={course._id}
+            type={userType as string}
+          />
         ))}
       </div>
     </>
