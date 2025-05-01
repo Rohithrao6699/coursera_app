@@ -29,7 +29,7 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
         role: "admin",
       });
       if (createdAdmin) {
-        res.status(200).json({ success: true, createdAdmin });
+        res.status(200).json({ success: true, content: createdAdmin });
       } else {
         res
           .status(411)
@@ -101,11 +101,33 @@ export async function createCourse(
         adminId: userId,
       });
       if (courseCreated) {
-        res.status(200).json({ success: true, courseCreated });
+        res.status(200).json({ success: true, content: courseCreated });
       } else {
         res
           .status(400)
           .json({ success: false, message: "unable to create course" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    throw new AppError("not authenticated", 403);
+  }
+}
+
+export async function myCourses(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const userId = req.userId;
+  if (userId) {
+    try {
+      const allcourses = await courseModel.find({ userId: userId });
+      if (allcourses) {
+        res.status(200).json({ success: true, content: allcourses });
+      } else {
+        res.status(400).json({ success: false, message: "no courses created" });
       }
     } catch (error) {
       next(error);
@@ -122,21 +144,24 @@ export async function deleteCourse(
 ) {
   const adminId = req.userId;
   const courseId = req.params.courseId;
-
-  const admin = await adminModel.findOne({ _id: adminId });
-  if (admin) {
-    const deletedcourse = await courseModel.deleteOne({
-      _id: courseId,
-      adminId: admin._id,
-    });
-    if (deletedcourse) {
-      res.status(200).json({ success: true, deleteCourse });
+  try {
+    const admin = await adminModel.findOne({ _id: adminId });
+    if (admin) {
+      const deletedcourse = await courseModel.deleteOne({
+        _id: courseId,
+        adminId: admin._id,
+      });
+      if (deletedcourse) {
+        res.status(200).json({ success: true, content: deleteCourse });
+      } else {
+        res
+          .status(400)
+          .json({ success: false, message: "unable to delete course" });
+      }
     } else {
-      res
-        .status(400)
-        .json({ success: false, message: "unable to delete course" });
+      throw new AppError("admin does not exsist", 403);
     }
-  } else {
-    throw new AppError("admin does not exsist", 403);
+  } catch (error) {
+    next(error);
   }
 }

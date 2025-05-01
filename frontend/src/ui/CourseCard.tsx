@@ -1,9 +1,12 @@
 import { useRecoilValue } from "recoil";
-import { AllCoursesAtom } from "../store/AllCoursesAtom";
+import { AllCoursesAtom } from "../store/userStore/AllCoursesAtom";
+import { Button } from "./Button";
+import { DeleteIcon } from "../icons/delete";
 
 interface CourseCardProps {
-  handleClick: () => void;
+  handleClick?: () => void;
   _id: string;
+  type: string;
 }
 export function CourseCard(props: CourseCardProps) {
   const allCourses = useRecoilValue(AllCoursesAtom);
@@ -25,7 +28,7 @@ export function CourseCard(props: CourseCardProps) {
           </div>
           <div className="min-h-15 py-2">
             <p className="text-xs">
-              <span className="text-sm">skills you'll gain:</span>{" "}
+              <span className="text-sm">skills you'll gain:</span>
               {course.skills}
             </p>
           </div>
@@ -33,6 +36,14 @@ export function CourseCard(props: CourseCardProps) {
             <p>{`type-${course.level}`}</p>
             <p>{Date.now()}</p>
           </div>
+          {props.type === "admin" && (
+            <Button
+              variant="primary"
+              size="md"
+              text="Delete Course"
+              icon={<DeleteIcon size="md" />}
+            />
+          )}
         </div>
       )}
     </>

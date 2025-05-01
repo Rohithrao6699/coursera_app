@@ -48,7 +48,7 @@ export async function userPurchaseCourse(token: string, courseId: number) {
   //   params: { courseId: courseId },
   // });
   // return data;
-  const res = await axios.post(`${Base_Url}/purchase`, {
+  const res = await axios.post(`${Base_Url}/purchase/${courseId}`, {
     headers: { Authorization: token },
     params: { courseId: courseId },
   });

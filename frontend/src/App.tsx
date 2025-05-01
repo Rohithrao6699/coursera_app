@@ -2,11 +2,12 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Signup } from "./pages/Signup";
 import { Signin } from "./pages/Signin";
 import { ErrorPage } from "./pages/Error";
-import { CourseBlogPage } from "./pages/CourseBlogPage";
+import { CourseBlogPage } from "./pages/userPages/CourseBlogPage";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import { MyCourse } from "./pages/MyCourse";
-import { Content } from "./components/Content";
+import { MyCourse } from "./pages/userPages/MyCourse";
+import { UserContent } from "./components/UserContent";
+import { AdminContent } from "./components/AdminContent";
 
 ///api/user
 function App() {
@@ -17,12 +18,12 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/user/dashboard" element={<Layout />}>
-            <Route index element={<Content />} />
+            <Route index element={<UserContent />} />
             <Route path="mycourses" element={<MyCourse />} />
             <Route path="course/:courseId" element={<CourseBlogPage />} />
           </Route>
           <Route path="/admin/Dashboard" element={<AdminLayout />}>
-            <Route index element={<Content />} />
+            <Route index element={<AdminContent />} />
             <Route path="createcourse" element={<CreateCourse />} />
           </Route>
           <Route path="/error" element={<ErrorPage />} />

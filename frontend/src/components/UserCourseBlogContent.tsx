@@ -1,7 +1,9 @@
 import { CourseBlogContentType } from "../types/UserTypes";
 import { Button } from "../ui/Button";
 
-export function CourseBlogContent({ filteredcourse }: CourseBlogContentType) {
+export function UserCourseBlogContent({
+  filteredcourse,
+}: CourseBlogContentType) {
   return (
     <>
       <div className="flex flex-col gap-2 p-4">
