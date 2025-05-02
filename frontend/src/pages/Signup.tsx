@@ -16,16 +16,34 @@ export function Signup() {
   return (
     <>
       <div className="h-screen w-screen flex flex-row">
-        <div className="w-[40%] flex flex-col items-center justify-center">
+        <div className="w-[55%] flex flex-col items-center justify-center">
           <Hero />
         </div>
-        <div className="w-[60%] flex flex-col justify-center items-center">
-          <p>
-            Sign up as{""} <span onClick={handleAdminClick}>admin</span> or{" "}
-            <span onClick={handleUserClick}>learner</span>
-          </p>
-          {userAtom && <Form type="signup" user={userAtom} />}
-        </div>
+        {userAtom ? (
+          <div className="w-[45%] flex flex-col justify-center items-center">
+            <Form type="signup" user={userAtom} />
+          </div>
+        ) : (
+          <div className="w-[60%] flex flex-col justify-center items-center">
+            <p>
+              Sign up as{""}{" "}
+              <span
+                onClick={handleAdminClick}
+                className="text-xl underline decoration-dotted cursor-pointer hover:font-medium"
+              >
+                admin
+              </span>{" "}
+              or{" "}
+              <span
+                onClick={handleUserClick}
+                className="text-xl underline decoration-dotted cursor-pointer hover:font-medium"
+              >
+                learner
+              </span>
+            </p>
+            {/* {userAtom && <Form type="signup" user={userAtom} />} */}
+          </div>
+        )}
       </div>
     </>
   );

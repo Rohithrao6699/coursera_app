@@ -1,4 +1,10 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { Signup } from "./pages/Signup";
 import { Signin } from "./pages/Signin";
 import { ErrorPage } from "./pages/Error";
@@ -17,14 +23,18 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/user/dashboard" element={<Layout />}>
-            <Route index element={<UserContent />} />
-            <Route path="mycourses" element={<MyCourse />} />
-            <Route path="course/:courseId" element={<CourseBlogPage />} />
-            <Route path="cart" element={<CartPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/user/dashboard" element={<Layout />}>
+              <Route index element={<UserContent />} />
+              <Route path="mycourses" element={<MyCourse />} />
+              <Route path="course/:courseId" element={<CourseBlogPage />} />
+              <Route path="cart" element={<CartPage />} />
+            </Route>
           </Route>
+
           <Route path="/admin/dashboard" element={<AdminLayout />}>
             <Route index element={<AdminContent />} />
             <Route path="createcourse" element={<CreateCourse />} />
@@ -36,6 +46,10 @@ function App() {
   );
 }
 
+function ProtectedRoute() {
+  let auth = localStorage.getItem("token");
+  return auth ? <Outlet /> : <Navigate to="/signin" />;
+}
 function Layout() {
   return (
     <>

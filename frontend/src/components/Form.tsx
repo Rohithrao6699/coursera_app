@@ -9,9 +9,9 @@ type FormProps = {
   user: string;
 };
 
-const defaultFormStyles: string = " flex flex-col gap-3";
+const defaultFormStyles: string = "flex flex-col gap-3";
 const defaultInputStyles: string =
-  "h-10 outline-none p-2 border border-slate-200 rounded-md";
+  "h-10 outline-none p-2 border border-zinc-300 rounded-md";
 
 export function Form(props: FormProps) {
   const navigate = useNavigate();
@@ -100,24 +100,29 @@ export function Form(props: FormProps) {
   return (
     <>
       {/* <div className="w-[60%] flex justify-center items-center"> */}
-      <div className="bg-slate-100 w-85 max-h-90 flex flex-col gap-10 py-5 px-3 rounded-lg">
+      <div className="bg-zinc-100 w-85 max-h-90 flex flex-col gap-8 py-5 px-3 rounded-lg shadow-lg">
         {props.type === "signup" ? (
           <>
-            <h4>Signup here to reach endless possibilities!</h4>
+            <h4 className="text-base font-medium tracking-normal">
+              SignUp here to reach endless possibilities!
+            </h4>
             <form onSubmit={handleSignupClick} className={defaultFormStyles}>
               <input
                 ref={nameRef}
                 placeholder="name"
+                type="text"
                 className={defaultInputStyles}
               />
               <input
                 ref={usernameRef}
                 placeholder="username"
+                type="text"
                 className={defaultInputStyles}
               />
               <input
                 ref={passwordRef}
                 placeholder="password"
+                type="password"
                 className={defaultInputStyles}
               />
               <Button
@@ -130,16 +135,20 @@ export function Form(props: FormProps) {
           </>
         ) : (
           <>
-            <h4>Login to reach endless possibilities!</h4>
+            <h4 className="text-base font-medium tracking-normal">
+              Login to reach endless possibilities!
+            </h4>
             <form onSubmit={handleSigninClick} className={defaultFormStyles}>
               <input
                 ref={usernameRef}
                 placeholder="username"
+                type="text"
                 className={defaultInputStyles}
               />
               <input
                 ref={passwordRef}
                 placeholder="password"
+                type="password"
                 className={defaultInputStyles}
               />
               <Button

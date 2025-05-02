@@ -24,25 +24,42 @@ export function Signin() {
   return (
     <>
       <div className="h-screen w-screen flex flex-row">
-        <div className="w-[40%] flex flex-col items-center justify-center">
+        <div className="w-[55%] flex flex-col items-center justify-center">
           <Hero />
         </div>
-        <div className="w-[60%] flex flex-col justify-center items-center">
+        <div className="w-[45%] flex flex-col justify-center items-center">
           {userAtom ? (
             <Form type="signin" user={userAtom} />
           ) : (
             <>
-              <p>
-                Sign in as{""} <span onClick={handleAdminClick}>admin</span> or{" "}
-                <span onClick={handleUserClick}>learner</span>
+              <p className="font-normal text-lg my-2">
+                Login as{""}{" "}
+                <span
+                  onClick={handleAdminClick}
+                  className="text-xl underline decoration-dotted cursor-pointer hover:font-medium"
+                >
+                  admin
+                </span>{" "}
+                or{" "}
+                <span
+                  onClick={handleUserClick}
+                  className="text-xl underline decoration-dotted cursor-pointer hover:font-medium"
+                >
+                  learner
+                </span>
                 {userAtom && <Form type="signin" user={userAtom} />}
               </p>
             </>
           )}
 
-          <p>
+          <p className="my-3 py-2">
             Never visited? please create account{" "}
-            <span onClick={handleClick}>here!</span>
+            <span
+              onClick={handleClick}
+              className="text-lg underline decoration-dotted cursor-pointer hover:font-medium"
+            >
+              here!
+            </span>
           </p>
         </div>
       </div>
