@@ -101,10 +101,9 @@ export function Form(props: FormProps) {
     <>
       {/* <div className="w-[60%] flex justify-center items-center"> */}
       <div className="bg-slate-100 w-85 max-h-90 flex flex-col gap-10 py-5 px-3 rounded-lg">
-        <h4>Signup here to reach endless possibilities!</h4>
-
         {props.type === "signup" ? (
           <>
+            <h4>Signup here to reach endless possibilities!</h4>
             <form onSubmit={handleSignupClick} className={defaultFormStyles}>
               <input
                 ref={nameRef}
@@ -131,6 +130,7 @@ export function Form(props: FormProps) {
           </>
         ) : (
           <>
+            <h4>Login to reach endless possibilities!</h4>
             <form onSubmit={handleSigninClick} className={defaultFormStyles}>
               <input
                 ref={usernameRef}

@@ -8,6 +8,7 @@ type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
   size: Size;
   text?: string;
   icon?: ReactElement;
+  onClick?: () => void;
 };
 
 const variantStyles = {
@@ -22,18 +23,24 @@ const sizeStyles = {
 };
 
 const defaultStyles: string = "rounded-md text-center cursor-pointer";
-export function Button(props: ButtonProps) {
+export function Button({
+  variant,
+  size,
+  onClick,
+  text,
+  icon,
+  ...rest
+}: ButtonProps) {
   return (
     <>
       <button
-        className={`${variantStyles[props.variant]} ${
-          sizeStyles[props.size]
-        } ${defaultStyles}`}
-        {...props}
+        className={`${variantStyles[variant]} ${sizeStyles[size]} ${defaultStyles}`}
+        {...rest}
+        onClick={onClick}
       >
         <p className="flex flex-row items-center gap-2">
-          {props.icon}
-          {props.text}
+          {icon}
+          {text}
         </p>
       </button>
     </>

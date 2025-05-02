@@ -8,6 +8,7 @@ import { Footer } from "./components/Footer";
 import { MyCourse } from "./pages/userPages/MyCourse";
 import { UserContent } from "./components/UserContent";
 import { AdminContent } from "./components/AdminContent";
+import { CreateCourse } from "./pages/adminPages/CreateCourse";
 
 ///api/user
 function App() {
@@ -33,13 +34,6 @@ function App() {
   );
 }
 
-function CreateCourse() {
-  return (
-    <>
-      <div>Hi</div>
-    </>
-  );
-}
 function Layout() {
   return (
     <>

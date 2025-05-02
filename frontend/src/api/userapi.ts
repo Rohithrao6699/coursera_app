@@ -65,7 +65,7 @@ export async function userGetmyContent(token: string) {
   //   params: {},
   // });
   // return data;
-  const res = await axios.post(`${Base_Url}/mycontent`, {
+  const res = await axios.get(`${Base_Url}/mycontent`, {
     headers: { Authorization: token },
   });
   const data: ReceivedDataType = res.data;

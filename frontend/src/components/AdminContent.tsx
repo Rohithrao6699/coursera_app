@@ -5,6 +5,7 @@ import { AdminCoursesAtom } from "../store/adminStore/AllCoursesAtom";
 import { useEffect } from "react";
 import { CreateUserAtom } from "../store/CreateUserAtom";
 import { useNavigate } from "react-router-dom";
+import { PlusIcon } from "../icons/plusIcon";
 
 export function AdminContent() {
   const [adminCourses, setAdminCourses] = useRecoilState(AdminCoursesAtom);
@@ -12,11 +13,15 @@ export function AdminContent() {
 
   async function fetchCourses() {
     const token = localStorage.getItem("token");
+    console.log(userType);
+
     if (token) {
       const data = await myCourses(token);
       if (data.success) {
         if (data.content && Array.isArray(data.content)) {
+          console.log(data.content);
           setAdminCourses(data.content);
+          console.log(`adminCourses: ${JSON.stringify(adminCourses)}`);
         }
       }
     }
@@ -31,7 +36,11 @@ export function AdminContent() {
         <EmptyCourseCard />
         {adminCourses.length > 0 &&
           adminCourses.map((course) => (
-            <CourseCard _id={course._id} type={userType as string} />
+            <CourseCard
+              _id={course._id}
+              type={userType as string}
+              key={course._id}
+            />
           ))}
       </div>
     </>
@@ -47,15 +56,16 @@ function EmptyCourseCard() {
   return (
     <>
       <div
-        className="flex flex-col gap-2 bg-slate-200 max-w-70 min-h-65 max-h-100 p-2 rounded-md shadow-lg"
+        className="flex flex-col gap-2 bg-slate-200 max-w-70 min-w-35  min-h-65 max-h-100 p-2 rounded-md shadow-lg"
         onClick={handleCreateCourseClick}
       >
         <div className="bg-yellow-100 min-h-25">
           {/* <img alt="image" /> */}
         </div>
-        <div className="min-h-35 flex flex-col gap-2 py-1">
-          {/* <p className="font-medium text-xs">title</p>
-          <p className="font-thin text-xs">tagline</p> */}
+        <div className="min-h-35 flex flex-col items-center justify-center gap-2 py-1">
+          <div className="bg-slate-300 rounded-full">
+            <PlusIcon size="lg" />
+          </div>
         </div>
         {/* <div className="min-h-15 py-2">
           <p className="text-xs">

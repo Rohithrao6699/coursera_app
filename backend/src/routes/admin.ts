@@ -15,6 +15,11 @@ adminRouter.post("/signup", signup);
 adminRouter.post("/signin", signin);
 adminRouter.post("/createCourse", auth, authorization, createCourse);
 adminRouter.get("/myCourse", auth, authorization, myCourses);
-adminRouter.post("/deleteCourse/:courseId", auth, authorization, deleteCourse);
+adminRouter.delete(
+  "/deleteCourse/:courseId",
+  auth,
+  authorization,
+  deleteCourse
+);
 
 export default adminRouter;

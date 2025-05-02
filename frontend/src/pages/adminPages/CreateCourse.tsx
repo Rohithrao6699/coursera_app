@@ -18,7 +18,7 @@ export function CreateCourse() {
   async function handleSubmit(e: any) {
     e.preventDefault();
     const title = titleRef.current?.value;
-    const tagline = taglineRef.current?.value;
+    const tagLine = taglineRef.current?.value;
     const skills = skillsRef.current?.value;
     const image = imageRef.current?.value;
     const content = contentRef.current?.value;
@@ -31,7 +31,7 @@ export function CreateCourse() {
     //useZod here for validation
     if (
       title &&
-      tagline &&
+      tagLine &&
       skills &&
       image &&
       content &&
@@ -42,7 +42,7 @@ export function CreateCourse() {
     ) {
       const body = {
         title,
-        tagline,
+        tagLine,
         skills,
         image,
         body: content,
@@ -74,15 +74,50 @@ export function CreateCourse() {
   return (
     <>
       <div>
-        <form onSubmit={handleSubmit}>
-          <input placeholder="title" ref={titleRef} />
-          <input placeholder="tagline" ref={taglineRef} />
-          <input placeholder="skills" ref={skillsRef} />
-          <input placeholder="image" ref={imageRef} />
-          <input placeholder="content" ref={contentRef} />
-          <input placeholder="level" ref={levelRef} />
-          <input placeholder="price" ref={priceRef} />
-          <input placeholder="seats" ref={seatsRef} />
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-full flex-col gap-4 rounded-lg bg-white p-8 shadow-lg"
+        >
+          <input
+            placeholder="title"
+            ref={titleRef}
+            className="input-field rounded-md p-2 outline-1"
+          />
+          <input
+            placeholder="tagline"
+            ref={taglineRef}
+            className="input-field rounded-md p-2 outline-1"
+          />
+          <input
+            placeholder="skills"
+            ref={skillsRef}
+            className="input-field rounded-md p-2 outline-1"
+          />
+          <input
+            placeholder="image"
+            ref={imageRef}
+            className="input-field rounded-md p-2 outline-1"
+          />
+          <input
+            placeholder="content"
+            ref={contentRef}
+            className="input-field rounded-md p-2 outline-1"
+          />
+          <input
+            placeholder="level"
+            ref={levelRef}
+            className="input-field rounded-md p-2 outline-1"
+          />
+          <input
+            placeholder="price"
+            ref={priceRef}
+            className="input-field rounded-md p-2 outline-1"
+          />
+          <input
+            placeholder="seats"
+            ref={seatsRef}
+            className="input-field rounded-md p-2 outline-1"
+          />
           <Button
             variant="primary"
             size="md"

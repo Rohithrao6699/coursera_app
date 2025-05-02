@@ -8,14 +8,17 @@ export function Signin() {
   const navigate = useNavigate();
   const [userAtom, setUserAtom] = useRecoilState(CreateUserAtom);
 
+  console.log(userAtom);
   function handleClick() {
     navigate("/signup");
   }
 
   function handleAdminClick() {
+    console.log("admin set to atom");
     setUserAtom("admin");
   }
   function handleUserClick() {
+    console.log("user set to atom");
     setUserAtom("user");
   }
   return (

@@ -3,12 +3,12 @@ import { CartIcon } from "../icons/cart";
 import { HomeIcon } from "../icons/home";
 import { LogoutIcon } from "../icons/logout";
 import { Button } from "../ui/Button";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { CreateUserAtom } from "../store/CreateUserAtom";
 
 export function Navbar() {
   const navigate = useNavigate();
-  const userType = useRecoilValue(CreateUserAtom);
+  const [userType, setUserType] = useRecoilState(CreateUserAtom);
   function handleHomeClick() {
     if (userType) {
       if (userType === "user") {
@@ -20,6 +20,12 @@ export function Navbar() {
   }
   function handleMyCourseClick() {
     navigate("mycourses");
+  }
+  function handleLogout() {
+    localStorage.clear();
+    setUserType(null);
+    console.log("logout clicked");
+    navigate("/signin");
   }
   return (
     <>
@@ -34,6 +40,7 @@ export function Navbar() {
               variant="secondary"
               size="md"
               text="Logout"
+              onClick={handleLogout}
               icon={<LogoutIcon size="sm" />}
             ></Button>
           </div>
@@ -47,6 +54,7 @@ export function Navbar() {
               variant="secondary"
               size="md"
               text="Logout"
+              onClick={handleLogout}
               icon={<LogoutIcon size="sm" />}
             ></Button>
           </div>

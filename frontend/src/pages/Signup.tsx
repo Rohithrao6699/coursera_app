@@ -11,7 +11,7 @@ export function Signup() {
   }
   function handleUserClick() {
     setUserAtom("user");
-    console.log("admin set to atom");
+    console.log("user set to atom");
   }
   return (
     <>

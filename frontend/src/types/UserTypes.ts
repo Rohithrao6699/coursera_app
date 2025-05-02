@@ -13,6 +13,7 @@ export type CourseType = {
   skills: string;
   _id: string;
 };
+
 export type ReceivedDataType = {
   success: boolean;
   message?: string;

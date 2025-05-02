@@ -11,7 +11,7 @@ interface AdminSingupInterface {
 
 interface adminCreateCourseInterface {
   title: string;
-  tagline: string;
+  tagLine: string;
   skills: string;
   level: string;
   price: string;

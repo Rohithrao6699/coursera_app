@@ -29,6 +29,7 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
         role: "admin",
       });
       if (createdAdmin) {
+        console.log(createdAdmin._id);
         res.status(200).json({ success: true, content: createdAdmin });
       } else {
         res
@@ -53,14 +54,17 @@ export async function signin(req: Request, res: Response, next: NextFunction) {
   type User = z.infer<typeof signInUserSchema>;
   if (validUser.success) {
     const safeUser: User = { username, password };
-    const userMatch = await userModel.findOne({ username: safeUser.username });
+    console.log(`safeUser: ${JSON.stringify(safeUser)}`);
+    const userMatch = await adminModel.findOne({ username: safeUser.username });
     if (userMatch) {
+      console.log(userMatch);
       const passwordMatch = await bcrypt.compare(
         safeUser.password,
         userMatch.password
       );
       if (passwordMatch) {
         const _id = userMatch._id;
+        console.log(`Id is: ${_id}`);
         const token = jwt.sign({ _id }, config.jwt_secret);
         if (token) {
           res.status(200).json({ success: true, token });
@@ -85,7 +89,7 @@ export async function createCourse(
   res: Response,
   next: NextFunction
 ) {
-  const { title, body, image, seats, tagLine, level, skills } = req.body;
+  const { title, body, image, seats, tagLine, level, skills, price } = req.body;
   const userId = req.userId;
 
   if (userId) {
@@ -123,8 +127,8 @@ export async function myCourses(
   const userId = req.userId;
   if (userId) {
     try {
-      const allcourses = await courseModel.find({ userId: userId });
-      if (allcourses) {
+      const allcourses = await courseModel.find({ adminId: userId });
+      if (allcourses.length <= 0) {
         res.status(200).json({ success: true, content: allcourses });
       } else {
         res.status(400).json({ success: false, message: "no courses created" });
@@ -152,7 +156,7 @@ export async function deleteCourse(
         adminId: admin._id,
       });
       if (deletedcourse) {
-        res.status(200).json({ success: true, content: deleteCourse });
+        res.status(200).json({ success: true, content: deletedcourse });
       } else {
         res
           .status(400)

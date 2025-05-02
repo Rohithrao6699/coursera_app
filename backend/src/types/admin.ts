@@ -6,4 +6,5 @@ export interface adminBody {
   tagLine: string;
   level: string;
   skills: string;
+  price: number;
 }
