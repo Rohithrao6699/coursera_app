@@ -1,24 +1,33 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { AllCoursesAtom } from "../store/userStore/AllCoursesAtom";
 import { Button } from "./Button";
 import { DeleteIcon } from "../icons/delete";
 import { AdminCoursesAtom } from "../store/adminStore/AllCoursesAtom";
 import { deleteCourse } from "../api/adminapi";
+import { CartCoursesAtom } from "../store/userStore/UserCasrtAtom";
 
 interface CourseCardProps {
   handleClick?: () => void;
   _id: string;
   type: string;
+  from?: string;
 }
 export function CourseCard(props: CourseCardProps) {
   const [admincourses, setAdminCourses] = useRecoilState(AdminCoursesAtom);
   const [allCourses, setAllCourses] = useRecoilState(AllCoursesAtom);
+  const setAddtoCartAtom = useSetRecoilState(CartCoursesAtom);
+  //
   let course: any;
   if (props.type === "admin") {
     course = admincourses.find((c) => c._id === props._id);
   } else {
     course = allCourses.find((course) => course._id === props._id);
   }
+  //
+  function handleCartDelete() {
+    setAddtoCartAtom((prev) => prev.filter((c) => c._id !== props._id));
+  }
+  //
   async function handleDelete() {
     console.log("clicked on delete");
     const courseId = course._id;
@@ -70,6 +79,17 @@ export function CourseCard(props: CourseCardProps) {
               onClick={handleDelete}
               icon={<DeleteIcon size="md" />}
             />
+          )}
+          {props.from === "cart" && (
+            <>
+              <Button
+                variant="primary"
+                size="md"
+                text="remove from cart"
+                onClick={handleCartDelete}
+                icon={<DeleteIcon size="md" />}
+              />
+            </>
           )}
         </div>
       )}

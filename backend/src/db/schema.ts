@@ -33,7 +33,13 @@ const PurchasedCourses = new Schema({
   userId: { type: mongoose.Types.ObjectId, ref: "users" },
 });
 
+const AddedToCart = new Schema({
+  courses: [{ type: mongoose.Types.ObjectId, ref: "courses" }],
+  userId: { type: mongoose.Types.ObjectId, ref: "users" },
+});
+
 export const userModel = model("users", UserSchema);
 export const adminModel = model("admins", AdminSchema);
 export const courseModel = model("courses", CourseSchema);
 export const purchaseModel = model("purchases_courses", PurchasedCourses);
+export const addToCartModel = model("cart", AddedToCart);

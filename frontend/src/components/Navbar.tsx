@@ -3,12 +3,21 @@ import { CartIcon } from "../icons/cart";
 import { HomeIcon } from "../icons/home";
 import { LogoutIcon } from "../icons/logout";
 import { Button } from "../ui/Button";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { CreateUserAtom } from "../store/CreateUserAtom";
+import { UserCoursesAtom } from "../store/userStore/UserCourseAtom";
+import { CartCoursesAtom } from "../store/userStore/UserCasrtAtom";
+import { AllCoursesAtom } from "../store/userStore/AllCoursesAtom";
+import { AdminCoursesAtom } from "../store/adminStore/AllCoursesAtom";
 
 export function Navbar() {
   const navigate = useNavigate();
   const [userType, setUserType] = useRecoilState(CreateUserAtom);
+  const setUserCourseAtom = useSetRecoilState(UserCoursesAtom);
+  const setCartCoursesAtom = useSetRecoilState(CartCoursesAtom);
+  const setAllCoursesAtom = useSetRecoilState(AllCoursesAtom);
+  const setAdminCoursesAtom = useSetRecoilState(AdminCoursesAtom);
+  //
   function handleHomeClick() {
     if (userType) {
       if (userType === "user") {
@@ -22,10 +31,21 @@ export function Navbar() {
     navigate("mycourses");
   }
   function handleLogout() {
+    // UserCoursesAtom []
+    //CartCoursesAtom []
+    //AllCoursesAtom []
+    //AdminCoursesAtom []
     localStorage.clear();
     setUserType(null);
+    setUserCourseAtom([]);
+    setCartCoursesAtom([]);
+    setAllCoursesAtom([]);
+    setAdminCoursesAtom([]);
     console.log("logout clicked");
     navigate("/signin");
+  }
+  function handleCartClick() {
+    navigate("cart");
   }
   return (
     <>
@@ -34,7 +54,7 @@ export function Navbar() {
           <div>title</div>
           <div className="flex flex-row gap-5 items-center">
             <HomeIcon size="md" onclick={handleHomeClick} />
-            <CartIcon size="md" />
+            <CartIcon size="md" onclick={handleCartClick} />
             <p onClick={handleMyCourseClick}>my courses</p>
             <Button
               variant="secondary"

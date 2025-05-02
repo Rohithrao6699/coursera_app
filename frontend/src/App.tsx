@@ -9,6 +9,7 @@ import { MyCourse } from "./pages/userPages/MyCourse";
 import { UserContent } from "./components/UserContent";
 import { AdminContent } from "./components/AdminContent";
 import { CreateCourse } from "./pages/adminPages/CreateCourse";
+import { CartPage } from "./pages/userPages/CartPage";
 
 ///api/user
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route index element={<UserContent />} />
             <Route path="mycourses" element={<MyCourse />} />
             <Route path="course/:courseId" element={<CourseBlogPage />} />
+            <Route path="cart" element={<CartPage />} />
           </Route>
           <Route path="/admin/dashboard" element={<AdminLayout />}>
             <Route index element={<AdminContent />} />

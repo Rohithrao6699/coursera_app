@@ -10,6 +10,7 @@ export function CartIcon(props: IconType) {
         stroke-width="1.5"
         stroke="currentColor"
         className={`${sizeStyles[props.size]}`}
+        onClick={props.onclick}
       >
         <path
           stroke-linecap="round"

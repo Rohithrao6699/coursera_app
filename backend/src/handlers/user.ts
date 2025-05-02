@@ -2,7 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { courseModel, purchaseModel, userModel } from "../db/schema";
+import {
+  addToCartModel,
+  courseModel,
+  purchaseModel,
+  userModel,
+} from "../db/schema";
 import { AppError } from "../types/AppError";
 import config from "../config/config";
 import { signInUserSchema, signUpUserSchema } from "../utils/zodObject";
@@ -194,5 +199,74 @@ export async function purchaseCourse(
     }
   } catch (error) {
     next(error);
+  }
+}
+
+export async function addToCart(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const userId = req.userId;
+  const courseId = req.body.courseId;
+  console.log(courseId);
+
+  try {
+    const user = await userModel.findOne({ _id: userId });
+    if (user) {
+      const alreadyExsisting = await addToCartModel.findOne({
+        userId: userId,
+        courses: { $in: [courseId] },
+        //"Find if any element in the courses array matches this courseId"
+      });
+      if (alreadyExsisting) {
+        res.status(403).json({ success: true, message: "already in cart" });
+      } else {
+        const addedToCart = await addToCartModel.findOneAndUpdate(
+          { userId },
+          { $addToSet: { courses: courseId } },
+          { upsert: true, new: true }
+        );
+        if (addedToCart) {
+          res.status(200).json({
+            success: true,
+            content: addedToCart,
+            message: "succesfully added to cart",
+          });
+        } else {
+          throw new AppError("unable to add to cart", 400);
+        }
+      }
+    } else {
+      throw new AppError("user not found", 400);
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getCartCourses(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const userId = req.userId;
+
+  if (userId) {
+    const user = await userModel.findOne({ _id: userId });
+    if (user) {
+      const cartCourses = await addToCartModel
+        .findOne({ userId: user._id })
+        .populate("courses");
+      if (cartCourses) {
+        res.status(200).json({ success: true, content: cartCourses });
+      } else {
+        res.status(411).json({ success: false, message: "no courses in cart" });
+      }
+    } else {
+      throw new AppError("user not found", 411);
+    }
+  } else {
+    throw new AppError("unable to validate token", 411);
   }
 }

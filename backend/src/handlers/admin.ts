@@ -128,7 +128,7 @@ export async function myCourses(
   if (userId) {
     try {
       const allcourses = await courseModel.find({ adminId: userId });
-      if (allcourses.length <= 0) {
+      if (allcourses.length > 0) {
         res.status(200).json({ success: true, content: allcourses });
       } else {
         res.status(400).json({ success: false, message: "no courses created" });
