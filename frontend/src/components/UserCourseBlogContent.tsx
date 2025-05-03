@@ -53,31 +53,42 @@ export function UserCourseBlogContent({
     //remove will delete that course from the cartState!
   }
   return (
-    <>
-      <div className="flex flex-col gap-2 p-4">
-        <h2 className="font-semibold text-xl">{filteredcourse.title}</h2>
-        <img alt="image" src={filteredcourse.image} className="min-h-40" />
-        <h4 className="font-semibold text-lg">{filteredcourse.title}</h4>
-        <p className="font-thin text-md">{filteredcourse.body}</p>
-        <p>
-          <span>skills you'll gain:</span>
-          {filteredcourse.skills}
+    <div className="flex-1 flex flex-row justify-around p-10 mx-15 h-screen">
+      <div className="flex flex-col gap-2 w-90">
+        <h2 className=" font-semibold tracking-wide text-xl ">
+          {filteredcourse.title}
+        </h2>
+        <img alt="image" src={filteredcourse.image} className=" h-80" />
+        <h4 className="font-semibold text-lg ">{filteredcourse.tagLine}</h4>
+        <p className="font-thin text-md ">{filteredcourse.body}</p>
+      </div>
+      <div className="flex flex-col gap-5 mt-20">
+        <p className="text-lg text-[#2f27ce] font-medium">
+          Skills you learn:{" "}
+          <span className="text-black text-sm">{filteredcourse.skills}</span>
+        </p>
+        <p className="text-[#2f27ce] text-lg font-medium">
+          Remaining seats:{" "}
+          <span className="text-black text-sm">{filteredcourse.seats}</span>
+        </p>
+        <p className="text-[#2f27ce] text-lg font-medium">
+          Price: <span className="text-black text-sm">${21}</span>
         </p>
         <div className="flex gap-2">
           <Button
-            variant="primary"
+            variant="secondary"
             size="lg"
-            text="buy now"
+            text="Buy Now"
             onClick={handlePurchase}
           />
           <Button
-            variant="primary"
+            variant="cart"
             size="lg"
-            text="add to cart"
+            text="Add To Cart"
             onClick={handleAddToCart}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

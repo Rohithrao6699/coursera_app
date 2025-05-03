@@ -31,7 +31,7 @@ export function CartPage() {
     getCartcourses();
   }, []);
   return (
-    <>
+    <div className="p-10 flex flex-row gap-10">
       {cartCourses.map((course) => (
         <>
           <CourseCard
@@ -43,6 +43,6 @@ export function CartPage() {
           />
         </>
       ))}
-    </>
+    </div>
   );
 }

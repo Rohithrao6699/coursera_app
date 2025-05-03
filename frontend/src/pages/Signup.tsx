@@ -15,12 +15,12 @@ export function Signup() {
   }
   return (
     <>
-      <div className="h-screen w-screen flex flex-row">
-        <div className="w-[55%] flex flex-col items-center justify-center">
+      <div className="h-full w-screen flex flex-row">
+        <div className="w-[50%] flex flex-col items-center justify-center">
           <Hero />
         </div>
         {userAtom ? (
-          <div className="w-[45%] flex flex-col justify-center items-center">
+          <div className="w-[50%] flex flex-col justify-center items-center">
             <Form type="signup" user={userAtom} />
           </div>
         ) : (
@@ -29,14 +29,14 @@ export function Signup() {
               Sign up as{""}{" "}
               <span
                 onClick={handleAdminClick}
-                className="text-xl underline decoration-dotted cursor-pointer hover:font-medium"
+                className="text-xl underline decoration-dotted cursor-pointer hover:font-medium hover:text-2xl text-[#2f27ce]"
               >
                 admin
               </span>{" "}
               or{" "}
               <span
                 onClick={handleUserClick}
-                className="text-xl underline decoration-dotted cursor-pointer hover:font-medium"
+                className="text-xl underline decoration-dotted cursor-pointer hover:font-medium hover:text-2xl text-[#2f27ce]"
               >
                 learner
               </span>

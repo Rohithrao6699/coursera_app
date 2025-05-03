@@ -5,11 +5,15 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userContent } from "../api/userapi";
 import { AllCoursesAtom } from "../store/userStore/AllCoursesAtom";
 import { CreateUserAtom } from "../store/CreateUserAtom";
+import { isSidebarOpen } from "../store/SideBarAtom";
+import { Sidebar } from "./SideBar";
 
 export function UserContent() {
+  const isOpen = useRecoilValue(isSidebarOpen);
   const [allcourses, setAllCourses] = useRecoilState(AllCoursesAtom);
   const UserType = useRecoilValue(CreateUserAtom);
   const navigate = useNavigate();
+
   function handleClick(_id: string) {
     navigate(`course/${_id}`);
   }
@@ -32,30 +36,24 @@ export function UserContent() {
 
   return (
     <>
-      <div className="bg-blue-200 w-60">siders</div>
-      <div className="bg-green-200 grid grid-cols-3 gap-4 place-items-center w-full">
-        {UserType &&
-          allcourses.map((course) => (
-            <CourseCard
-              handleClick={() => handleClick(course._id)}
-              _id={course._id}
-              type={UserType}
-            />
-          ))}
-
-        {/* <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard /> */}
+      <div className="flex-1 flex flex-row h-[100%]">
+        <div
+          className={`bg-[#F9FBFC] flex flex-col py-2 gap-10 
+        transition-all duration-300 ease-in-out 
+        ${isOpen ? "w-60" : "w-12"}`}
+        >
+          <Sidebar />
+        </div>
+        <div className="grid grid-cols-4 gap-2 place-items-center w-full">
+          {UserType &&
+            allcourses.map((course) => (
+              <CourseCard
+                handleClick={() => handleClick(course._id)}
+                _id={course._id}
+                type={UserType}
+              />
+            ))}
+        </div>
       </div>
     </>
   );

@@ -9,5 +9,11 @@ export function CourseBlogPage() {
   const allCourses = useRecoilValue(AllCoursesAtom);
   const course = allCourses.find((course) => course._id === courseId);
 
-  return <>{course && <UserCourseBlogContent filteredcourse={course} />}</>;
+  return (
+    <>
+      {/* <div className="flex-1"> */}
+      {course && <UserCourseBlogContent filteredcourse={course} />}
+      {/* </div> */}
+    </>
+  );
 }

@@ -31,12 +31,8 @@ export function Navbar() {
     navigate("mycourses");
   }
   function handleLogout() {
-    // UserCoursesAtom []
-    //CartCoursesAtom []
-    //AllCoursesAtom []
-    //AdminCoursesAtom []
-    localStorage.clear();
     setUserType(null);
+    localStorage.clear();
     setUserCourseAtom([]);
     setCartCoursesAtom([]);
     setAllCoursesAtom([]);
@@ -50,14 +46,19 @@ export function Navbar() {
   return (
     <>
       {userType === "user" ? (
-        <nav className="bg-yellow-200 h-full flex flex-row justify-between items-center px-5">
-          <div>title</div>
-          <div className="flex flex-row gap-5 items-center">
+        <nav className="border-b-1 border-slate-300 h-full flex flex-row justify-between items-center px-5">
+          <div className="text-2xl font-bold text-[#2f27ce]">Coursera</div>
+          <div className="flex flex-row gap-7 items-center">
             <HomeIcon size="md" onclick={handleHomeClick} />
             <CartIcon size="md" onclick={handleCartClick} />
-            <p onClick={handleMyCourseClick}>my courses</p>
+            <p
+              onClick={handleMyCourseClick}
+              className="cursor-pointer text-lg text-black hover:text-[#2f27ce]"
+            >
+              My Courses
+            </p>
             <Button
-              variant="secondary"
+              variant="primary"
               size="md"
               text="Logout"
               onClick={handleLogout}
@@ -66,12 +67,12 @@ export function Navbar() {
           </div>
         </nav>
       ) : (
-        <nav className="bg-yellow-200 h-full flex flex-row justify-between items-center px-5">
-          <div>title</div>
-          <div className="flex flex-row gap-5 items-center">
+        <nav className="border-b-1 border-slate-300 h-full flex flex-row justify-between items-center px-5">
+          <div className="text-2xl font-bold text-[#2f27ce]">Coursera</div>
+          <div className="flex flex-row gap-8 items-center">
             <HomeIcon size="md" onclick={handleHomeClick} />
             <Button
-              variant="secondary"
+              variant="primary"
               size="md"
               text="Logout"
               onClick={handleLogout}

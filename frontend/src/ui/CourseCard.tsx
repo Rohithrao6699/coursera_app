@@ -51,45 +51,60 @@ export function CourseCard(props: CourseCardProps) {
     <>
       {course && (
         <div
-          className="flex flex-col gap-2 bg-slate-200 max-w-70 min-h-65 max-h-100 p-2 rounded-md shadow-lg"
+          className="flex flex-col gap-2 max-w-55 min-w-50 min-h-65 max-h-100 p-2 rounded-md outline-3 cursor-pointer outline-slate-200 hover:bg-neutral-50 hover:outline-2 hover:shadow-2xl hover:shadow-[#c5c3eb]"
           onClick={props.handleClick}
         >
-          <div className="bg-yellow-100 min-h-25">
+          <div className="outline-1 outline-slate-200 rounded-sm min-h-25">
             <img alt="image" />
           </div>
-          <div className="min-h-20 flex flex-col gap-2 py-1">
-            <p className="font-medium text-xs">{course.title}</p>
+          <div className="min-h-15 flex flex-col gap-1 py-1">
+            <p className="font-medium text-xs tracking-wide">{course.title}</p>
             <p className="font-thin text-xs">{course.tagLine}</p>
           </div>
-          <div className="min-h-15 py-2">
+          <div className="min-h-10">
             <p className="text-xs">
-              <span className="text-sm">skills you'll gain:</span>
+              <span className="text-xs font-medium tracking-normal">
+                Skills you'll gain:{" "}
+              </span>
               {course.skills}
             </p>
           </div>
-          <div className="">
-            <p>{`type-${course.level}`}</p>
-            <p>{Date.now()}</p>
+          <div className="flex flex-col gap-2">
+            <p className="text-xs">
+              <span className="font-medium">Price:</span> 123
+            </p>
+            <p className="flex flex-row items-center justify-between">
+              <span className="text-[8px]">{`Level: ${course.level}`}</span>
+              <span className="text-[8px]">{`Remaining Seats: ${course.seats}`}</span>
+            </p>
           </div>
           {props.type === "admin" && (
-            <Button
-              variant="primary"
-              size="md"
-              text="Delete Course"
-              onClick={handleDelete}
-              icon={<DeleteIcon size="md" />}
-            />
-          )}
-          {props.from === "cart" && (
-            <>
+            <div className="pt-3">
               <Button
                 variant="primary"
                 size="md"
-                text="remove from cart"
+                text="Delete Course"
+                onClick={handleDelete}
+                icon={<DeleteIcon size="md" />}
+              />
+            </div>
+          )}
+          {props.from === "cart" && (
+            <div className="flex flex-row items-center justify-between gap-2 pt-2">
+              <Button
+                variant="delete"
+                size="sm"
+                text="remove"
                 onClick={handleCartDelete}
                 icon={<DeleteIcon size="md" />}
               />
-            </>
+              <Button
+                variant="secondary"
+                size="sm"
+                text="Buy Now"
+                onClick={handleCartDelete}
+              />
+            </div>
           )}
         </div>
       )}

@@ -1,5 +1,7 @@
 import { IconType, sizeStyles } from "./iconsTypes";
 
+const defaultStyles: string =
+  "cursor-pointer text-lg text-black hover:text-[#2f27ce]";
 export function CartIcon(props: IconType) {
   return (
     <>
@@ -9,7 +11,7 @@ export function CartIcon(props: IconType) {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        className={`${sizeStyles[props.size]}`}
+        className={`${sizeStyles[props.size]} ${defaultStyles}`}
         onClick={props.onclick}
       >
         <path

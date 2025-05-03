@@ -23,11 +23,11 @@ export function Signin() {
   }
   return (
     <>
-      <div className="h-screen w-screen flex flex-row">
-        <div className="w-[55%] flex flex-col items-center justify-center">
+      <div className="h-full flex flex-row">
+        <div className="w-[50%] flex flex-col items-center justify-center">
           <Hero />
         </div>
-        <div className="w-[45%] flex flex-col justify-center items-center">
+        <div className="w-[50%] flex flex-col justify-center items-center">
           {userAtom ? (
             <Form type="signin" user={userAtom} />
           ) : (
@@ -36,14 +36,14 @@ export function Signin() {
                 Login as{""}{" "}
                 <span
                   onClick={handleAdminClick}
-                  className="text-xl underline decoration-dotted cursor-pointer hover:font-medium"
+                  className="text-xl underline decoration-dotted cursor-pointer  hover:font-medium hover:text-2xl text-[#2f27ce]"
                 >
                   admin
                 </span>{" "}
                 or{" "}
                 <span
                   onClick={handleUserClick}
-                  className="text-xl underline decoration-dotted cursor-pointer hover:font-medium"
+                  className="text-xl underline decoration-dotted cursor-pointer hover:font-medium hover:text-2xl text-[#2f27ce]"
                 >
                   learner
                 </span>
@@ -56,7 +56,7 @@ export function Signin() {
             Never visited? please create account{" "}
             <span
               onClick={handleClick}
-              className="text-lg underline decoration-dotted cursor-pointer hover:font-medium"
+              className="text-lg underline decoration-dotted cursor-pointer hover:font-medium hover:text-[#2f27ce]"
             >
               here!
             </span>

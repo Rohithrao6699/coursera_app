@@ -119,9 +119,9 @@ export function CreateCourse() {
             className="input-field rounded-md p-2 outline-1"
           />
           <Button
-            variant="primary"
+            variant="create"
             size="md"
-            text="create course"
+            text="Create Course"
             type="submit"
           />
         </form>

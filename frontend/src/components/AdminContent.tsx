@@ -6,10 +6,14 @@ import { useEffect } from "react";
 import { CreateUserAtom } from "../store/CreateUserAtom";
 import { useNavigate } from "react-router-dom";
 import { PlusIcon } from "../icons/plusIcon";
+import { Sidebar } from "./SideBar";
+import { isSidebarOpen } from "../store/SideBarAtom";
+import { LeftIcon } from "../icons/left";
 
 export function AdminContent() {
   const [adminCourses, setAdminCourses] = useRecoilState(AdminCoursesAtom);
   const userType = useRecoilValue(CreateUserAtom);
+  const isOpen = useRecoilValue(isSidebarOpen);
 
   async function fetchCourses() {
     const token = localStorage.getItem("token");
@@ -31,17 +35,30 @@ export function AdminContent() {
   }, []);
   return (
     <>
-      <div className="bg-blue-200 w-60">siders</div>
-      <div className="bg-green-200 grid grid-cols-3 gap-4 place-items-center w-full">
-        <EmptyCourseCard />
-        {adminCourses.length > 0 &&
-          adminCourses.map((course) => (
-            <CourseCard
-              _id={course._id}
-              type={userType as string}
-              key={course._id}
-            />
-          ))}
+      <div className="flex-1 flex flex-row h-[100%]">
+        <div
+          className={`bg-[#F9FBFC] flex flex-col py-2 gap-10 
+                transition-all duration-300 ease-in-out 
+                ${isOpen ? "w-60" : "w-12"}`}
+        >
+          <Sidebar />
+        </div>
+        <div className="grid grid-cols-4 gap-2 place-items-center w-full">
+          <EmptyCourseCard />
+          {adminCourses.length > 0 ? (
+            adminCourses.map((course) => (
+              <CourseCard
+                _id={course._id}
+                type={userType as string}
+                key={course._id}
+              />
+            ))
+          ) : (
+            <div className="text-lg font-medium tracking-wider">
+              Please add your first course by clicking <LeftIcon size="md" />
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
@@ -56,14 +73,14 @@ function EmptyCourseCard() {
   return (
     <>
       <div
-        className="flex flex-col gap-2 bg-slate-200 max-w-70 min-w-35  min-h-65 max-h-100 p-2 rounded-md shadow-lg"
+        className="flex flex-col gap-2 bg-slate-200 max-w-70 min-w-35 cursor-pointer min-h-65 max-h-100 p-2 rounded-md shadow-lg"
         onClick={handleCreateCourseClick}
       >
         <div className="bg-yellow-100 min-h-25">
           {/* <img alt="image" /> */}
         </div>
         <div className="min-h-35 flex flex-col items-center justify-center gap-2 py-1">
-          <div className="bg-slate-300 rounded-full">
+          <div className="bg-slate-300 rounded-full w-30 h-30 flex items-center justify-center">
             <PlusIcon size="lg" />
           </div>
         </div>

@@ -32,8 +32,7 @@ export function MyCourse() {
 
   return (
     <>
-      <div>
-        hi, fetch users purchased courses and display them as courseCards
+      <div className="p-10 flex flex-row gap-10">
         {myCourses.map((course) => (
           <CourseCard
             handleClick={handleMyCourseClick}

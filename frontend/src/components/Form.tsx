@@ -103,8 +103,8 @@ export function Form(props: FormProps) {
       <div className="bg-zinc-100 w-85 max-h-90 flex flex-col gap-8 py-5 px-3 rounded-lg shadow-lg">
         {props.type === "signup" ? (
           <>
-            <h4 className="text-base font-medium tracking-normal">
-              SignUp here to reach endless possibilities!
+            <h4 className="text-base font-normal tracking-normal">
+              Signup here to reach endless possibilities!
             </h4>
             <form onSubmit={handleSignupClick} className={defaultFormStyles}>
               <input
@@ -125,17 +125,12 @@ export function Form(props: FormProps) {
                 type="password"
                 className={defaultInputStyles}
               />
-              <Button
-                variant="secondary"
-                size="lg"
-                text="Signup"
-                type="submit"
-              />
+              <Button variant="primary" size="lg" text="Signup" type="submit" />
             </form>
           </>
         ) : (
           <>
-            <h4 className="text-base font-medium tracking-normal">
+            <h4 className="text-base font-normal tracking-normal">
               Login to reach endless possibilities!
             </h4>
             <form onSubmit={handleSigninClick} className={defaultFormStyles}>
@@ -151,12 +146,7 @@ export function Form(props: FormProps) {
                 type="password"
                 className={defaultInputStyles}
               />
-              <Button
-                variant="secondary"
-                size="lg"
-                text="Login"
-                type="submit"
-              />
+              <Button variant="primary" size="lg" text="Login" type="submit" />
             </form>
           </>
         )}
